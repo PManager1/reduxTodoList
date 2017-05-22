@@ -6,11 +6,42 @@ import {
   View,
   StatusBar,
   TextInput,
+  ScrollView,
 } from 'react-native';
 
+var TodoItem = React.createClass({
+    render(){
+      return(
+        <View style={styles.todoContainer}>
+            <Text style={styles.todoText}>
+                {this.props.text}
+            </Text>
+        </View>
+      )
+    }
+});
 
 class Main extends Component {
   render() {
+  var temporaryTodos = [
+    {
+      id: "2323432",
+      text: "Hello!"
+    },
+    {
+      id: "2323232",
+      text: "Hello Again!"
+    },
+  ]
+
+var renderTodos = () => {
+        return temporaryTodos.map((todo) => {
+            return (
+              <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
+            )
+        });
+    }
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content"/>
@@ -23,9 +54,12 @@ class Main extends Component {
           <TextInput style={styles.input}/>
         </View>
 
-        <Text style={styles.welcome}>
-          Welcome to React from Main.js!
-        </Text>
+        <ScrollView
+          automaticallyAdjustContentInsets={false}>
+          {renderTodos()}
+
+        </ScrollView>
+
       </View>
     );
   }
@@ -73,6 +107,36 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  todoContainer: {
+    padding: 16,
+    borderTopWidth:1,
+    borderBottomWidth:1,
+    marginBottom: -1,
+    borderColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  todoText: {
+
+  },
 });
 
 module.exports = Main;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
