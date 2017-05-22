@@ -22,7 +22,23 @@ var TodoItem = React.createClass({
 });
 
 
-class Main extends Component {
+var Main =  React.createClass ({
+  getInitialState() {
+      return {
+        newTodoText: ""
+      }
+  },
+  addNewTodo() {
+              // here we grab this  newTodoText  value from our state.
+    var {newTodoText} = this.state;
+              //if newTodoText exists && its not empty, if both previous conditions met, then we'll just ignore that somebody submitted it.
+    if (newTodoText && newTodoText != ""){
+      this.setState({
+          newTodoText: ""
+      });
+      console.log(' newTodoText = ', newTodoText);
+    }
+  },
   render() {
   var temporaryTodos = [
     {
@@ -52,7 +68,19 @@ var renderTodos = () => {
         </View>
 
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input}/>
+          <TextInput
+            style={styles.input}
+            returnKeyType="done"
+            placeholder="New TO-DO"
+            value={this.state.newTodoText}
+            onSubmitEditing={this.addNewTodo}
+            onChange={(event) => {
+            this.setState({
+                newTodoText: event.nativeEvent.text
+            })
+          }}
+
+            />
         </View>
 
         <ScrollView
@@ -64,7 +92,7 @@ var renderTodos = () => {
       </View>
     );
   }
-}
+});
 
 const styles = StyleSheet.create({
   container: {
