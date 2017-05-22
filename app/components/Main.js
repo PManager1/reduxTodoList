@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
 import { Provider } from 'react-redux';
 import {
   StyleSheet,
@@ -8,6 +9,8 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
+
+import {addTodo} from '../actions';
 
 var TodoItem = React.createClass({
     render(){
@@ -36,23 +39,16 @@ var Main =  React.createClass ({
       this.setState({
           newTodoText: ""
       });
+      // this.props.dispatch(changeText("new fucking text"));
+      //  here addTodo is the action from actions/index.js
+      this.props.dispatch(addTodo(newTodoText));
       console.log(' newTodoText = ', newTodoText);
     }
   },
   render() {
-  var temporaryTodos = [
-    {
-      id: "2323432",
-      text: "Hello!"
-    },
-    {
-      id: "2323232",
-      text: "Hello Again!"
-    },
-  ]
 
 var renderTodos = () => {
-        return temporaryTodos.map((todo) => {
+        return this.props.todos.map((todo) => {
             return (
               <TodoItem text={todo.text} key={todo.id} id={todo.id}/>
             )
@@ -151,7 +147,13 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Main;
+var mapStateToProps = (state) => {
+  return{
+      todos: state.todos
+  }
+};
+
+module.exports = connect(mapStateToProps)(Main);
 
 
 
