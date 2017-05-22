@@ -8,21 +8,28 @@ import {
   StatusBar,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
-import {addTodo} from '../actions';
+import { addTodo, deleteTodo } from '../actions';
 
-var TodoItem = React.createClass({
+var TodoItem = connect()(React.createClass({
+
+  deleteSelf(){
+    this.props.dispatch(deleteTodo(this.props.id));
+  },
     render(){
       return(
-        <View style={styles.todoContainer}>
-            <Text style={styles.todoText}>
-                {this.props.text}
-            </Text>
-        </View>
+        <TouchableOpacity onPress={this.deleteSelf}>
+          <View style={styles.todoContainer}>
+              <Text style={styles.todoText}>
+                  {this.props.text}
+              </Text>
+          </View>
+        </TouchableOpacity>
       )
     }
-});
+}));
 
 
 var Main =  React.createClass ({
@@ -57,6 +64,7 @@ var renderTodos = () => {
 
     return (
       <View style={styles.container}>
+
         <StatusBar barStyle="light-content"/>
         <View style={styles.topBar}>
           <Text style={styles.title}> To-DO List
@@ -73,10 +81,9 @@ var renderTodos = () => {
             onChange={(event) => {
             this.setState({
                 newTodoText: event.nativeEvent.text
-            })
-          }}
-
-            />
+                          })
+                      }}
+          />
         </View>
 
         <ScrollView
@@ -85,7 +92,7 @@ var renderTodos = () => {
 
         </ScrollView>
 
-      </View>
+      </View> // whole view container <View style={styles.container}>
     );
   }
 });

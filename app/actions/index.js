@@ -4,3 +4,39 @@ exports.addTodo = (text) => {
     text: text
   }
 }
+
+exports.deleteTodo = (id) => {
+  return{
+    type: 'DELETE_TODO',
+    id: id
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 
